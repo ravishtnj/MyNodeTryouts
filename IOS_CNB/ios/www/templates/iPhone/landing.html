@@ -1,0 +1,232 @@
+<ion-view view-title="MIS Dashboard" ng-init="callLocalOrService(isService, misDashboardCallTypeInitial)" >   
+    <ion-nav-buttons side="right" margin-left:10px;>
+        <button class="button  button-icon button-clear ion-ios-bell" ng-click="gotoAlerts()" ><span class="badge badge-assertive" style="top:-40px;right:10px;">{{unseenAlertCount}}</span></button>
+        <span style="padding-right:10px;"><button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right"></button></span>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="callLocalOrService(isService, misDashboardCallTypeInitial)">
+        </ion-refresher>
+        <!-- -->
+        <ion-slide-box class="mis-dashboard-slider" on-slide-changed="callChangeFunction($index)" >
+            <ion-slide class="slidebox">
+                <div class="box blue">
+                    <div class="metrics-blue-bar">
+                        <div class="row">
+                            <div class="col col-50" align="center">
+                                Outstanding Exceptions
+                            </div>
+                            <div class="col col-50 metrics-blue-bar"  align="center">
+                                Red &amp; Amber Exceptions
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-phone graph-section">
+                        <div class="col col-50">
+                            <nvd3 options='outStandingOptions1' data='outStandingData1'></nvd3>
+                        </div>
+                        <div class="col col-50  ">
+                            <nvd3 options='redAmberOptions1' data='redAmberData1'></nvd3>
+                        </div>
+                    </div>
+                    <div class="row row-phone" style="margin-top:5px;padding-left:8px;padding-bottom:0px;">
+                        <div class="col" style="border-top: 1px solid #e0dede;padding-bottom: 0px;" align="left">
+                            Report Pending Signoff
+                        </div>
+                    </div>
+                    <div class="row row-phone" ng-show="showPendingSignOffExceptions">
+                        <div class="col signoff-status status-commentary" style="padding-top:10px;">
+                            <progress max="100" value="{{pendingSignoffPercent}}"> </progress>
+                        </div>
+                        <div class="col col-20 exceptions" style="padding-top:10px;font-weight:bold;" >{{pendingSignOffCount}}/{{totalExceptionCount}}</div>
+                    </div>
+                    <div class="row row-phone" ng-show="!showPendingSignOffExceptions">
+                        <div class="col padding" align="center"  >
+                            No data available
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+            <ion-slide class="slidebox">
+                <div class="box yellow">
+                    <div class="metrics-blue-bar">
+                        <div class="row">
+                            <div class="col" align="center">
+                                Exception Trend Over Six Weeks
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-phone padding-bottom">
+                        <div class="col ">
+                            <nvd3 options='linechartoptions' data='linechartdata'></nvd3>
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+            <ion-slide class="slidebox">
+                <div class="box pink">
+                    <div class="metrics-blue-bar">
+                        <div class="row">
+                            <div class="col" align="center">
+                                Outstanding Exception By Category
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-phone padding-bottom">
+                        <div class="col ">
+                            <nvd3 options='horzbaroptions' data='horzbardata'></nvd3>
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+
+        <ion-tabs class="tabs-positive dashboard-tab">
+            <ion-tab title="By Manager">
+                <!-- Tab 2 content -->
+                <ion-view class="filter-tab-view" name="about-tab">
+                    <ion-list can-swipe="true" >
+                        <ion-item class="item-details-list header">
+                            <div class="row">
+                                <div class="col col-40 namelisthead"><span class="dashboardSectionHeaders">Manager Name</span></div>
+                                <div class="col col-33 valuelisthead"><span class="dashboardSectionHeaders">Uncommented Red /<br>Total Items</span></div>
+                                <div class="col col-25 valuelisthead" style="text-align:center;"><span class="dashboardSectionHeaders">Pending <br/> Signoff</span></div>
+                            </div>
+                        </ion-item>
+                        <div class="row" ng-show="!showExceptionsByManager" >
+                            <div class="col" align="center">No data available</div>
+                        </div>
+                        <ion-item ng-repeat="list in managerListData" class="item-details-list">
+                            <div class="row">
+                                <div class="col col-40 namelist">{{list.Senior_Manager}}</div>
+                                <div class="col col-25 valuelist" style="padding-right:15px" align="center" ><span>{{list.redUncommentedCount}} / {{list.TotExceptions}}</span></div>
+                                <div class="col col-25 valuelist" align="right" style="padding-right:12px;"><span>{{list.pendingSignoff}}</span></div>
+                                <div class="col col-10 iconlist" ng-click="showDetailsPopup($event,list)" align="right"><i class="icon icon-logo ion-information-circled"></i></div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+
+            <ion-tab title="By Function">
+                <!-- Tab 1 content -->
+                <ion-view class="filter-tab-view" name="home-tab">
+                    <ion-list can-swipe="true" >
+                        <ion-item class="item-details-list header">
+                            <div class="row">
+                                <div class="col col-40 namelisthead"><span class="dashboardSectionHeaders">Function Name</span></div>
+                                <div class="col col-33 valuelisthead"><span class="dashboardSectionHeaders">Uncommented Red /<br/> Total Items</span></div>
+                                <div class="col col-25 valuelisthead" style="text-align:center;"><span class="dashboardSectionHeaders">Pending <br/> Signoff</span></div>
+                            </div>
+                        </ion-item>
+                        <div class="row" ng-show="!showExceptionsByFunction" >
+                            <div class="col" align="center">No data available</div>
+                        </div>
+                        <ion-item ng-repeat="list in functionListData" class="item-details-list">
+                            <div class="row">
+                                <div class="col col-40 namelist">{{list.Category}}</div>
+                                <div class="col col-25 valuelist" style="padding-right:15px" align="center" ><span>{{list.redUncommentedCount}} / {{list.TotExceptions}}</span></div>
+                                <div class="col col-25 valuelist" align="right" style="padding-right:12px;"><span>{{list.pendingSignoff}}</span></div>
+                                <div class="col col-10 iconlist" ng-click="showDetailsPopup($event,list)" align="right"><i class="icon icon-logo ion-information-circled"></i></div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+            
+            <ion-tab title="By Product">
+                <!-- Tab 3 content -->
+                <ion-view class="filter-tab-view" name="settings-tab">
+                    <ion-list can-swipe="true" >
+                        <ion-item class="item-details-list header">
+                            <div class="row">
+                                <div class="col col-40 namelisthead"><span class="dashboardSectionHeaders">Product Name</span></div>
+                                <div class="col col-33 valuelisthead"><span class="dashboardSectionHeaders">Uncommented  Red /<br/> Total Items</span></div>
+                                <div class="col col-25 valuelisthead" style="text-align:center;"><span class="dashboardSectionHeaders">Pending <br/> Signoff</span></div>
+                            </div>
+                        </ion-item>
+                        <div class="row" ng-show="!showExceptionsByProduct" >
+                            <div class="col" align="center">No data available</div>
+                        </div>
+                        <ion-item ng-repeat="list in productListData" class="item-details-list">
+                            <div class="row">
+                                <div class="col col-40 namelist">{{list.Product}}</div>
+                                <div class="col col-25 valuelist" style="padding-right:15px" align="center" ><span>{{list.redUncommentedCount}} / {{list.TotExceptions}}</span></div>
+                                <div class="col col-25 valuelist" align="right" style="padding-right:12px;"><span>{{list.pendingSignoff}}</span></div>
+                                <div class="col col-10 iconlist" ng-click="showDetailsPopup($event,list)" align="right"><i class="icon icon-logo ion-information-circled"></i></div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+        </ion-tabs>
+    </ion-content>
+</ion-view>
+
+<!--
+<ion-list>
+    <ion-item class="item-details-list list-details header">
+    <div class="row pop-head">
+    <div class="col col-60" >Uncommented Red Items</div>
+    <div class="col col-40" align="right">{{currentData.redUncommentedCount}}</div>
+    </div>
+    </ion-item>
+    </ion-list>
+-->
+
+<script id="dashboard-popover.html" type="text/ng-template">
+    <ion-popover-view class="dashboard-popup">
+    <ion-content class="details-pop" scroll="false">
+    <div class="row header">
+    <div class="col col-90" align="left">
+    <div class="item popup-header">Details</div>
+    </div>
+    <div class="col col-10" align="right" ng-click="closeDetailsPopup()"><i class="icon ion-close-round popup-close-icon" ></i></div>
+    </div>
+    <ion-scroll style="height:90%;">
+    <ion-list>
+    <ion-item class="item-details-list list-content-details" >
+    <div class="row highlight">
+    <div class="col col-40">T1</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket1}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">T2</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket2}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">T3</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket3}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">4-7</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket4}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">8-15</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket5}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">16-30</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket6}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">31-60</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket7}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">61+</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket8}}</div>
+    </div>
+    <div class="row highlight metrics-blue-bar">
+    <div class="col col-40">Total</div>
+    <div class="col col-60" align="right">{{currentData.TotExceptions}}</div>
+    </div>
+    </ion-item>
+    </ion-list>
+    </ion-scroll>
+    </ion-content>
+    </ion-popover-view>
+    </script>
+

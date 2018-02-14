@@ -1,0 +1,74 @@
+<ion-view view-title="Report sign off">
+    <ion-nav-buttons side="secondary">
+        <button class="signoff button button-balanced" ng-click="goSignOff($event)">Sign Off</button>
+        <button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right" style="margin: 5px 0px 0px 15px;" ></button>
+    </ion-nav-buttons>
+    <ion-content class="iphone details-list">
+    <ion-list can-swipe="true" >
+        <ion-item ng-repeat="playlist in playlists" class="item-details-list">
+            <div class="row row-phone">
+                <div class="col col-10">
+                    <ion-checkbox class="signoff-check {{playlist.checkboxClass}}" ng-disabled="playlist.checkboxDisabled" ng-model="playlist.checkboxStatus" style="width:35px;height:35px">&nbsp;</ion-checkbox>
+                </div>
+                <div class="col col-90 align-details-header" style="white-space:initial;">
+                    <span class="details-head" style="font-size: 16px;">{{playlist.ReportName}}</span> <span  style="padding-left:5px;"> For {{playlist.vcrDesc}} </span>
+                </div>
+            </div>
+            <div class="row row-phone secondary-line">
+                <div class="col col-40 secondary-label">
+                    UNCOMMENTED RED ITEMS
+                </div>
+                <div class="col secondary-label" align="right">
+                    EXCEPTIONS PROFILE
+                </div>
+            </div>
+            <div class="row row-phone secondary-content">
+                <div class="col signoff-status status-commentary">
+                    <progress max="{{playlist.redTotal}}" value="{{playlist.redUncommentedCount}}"> </progress>
+                </div>
+                <div class="col col-20 exceptions" >
+                    {{playlist.redUncommentedCount}} / {{playlist.redTotal}}
+                </div>
+                <div class="col profile-exceptions" align="right">
+                        <span style="width:{{playlist.exceptionWidth}}px">{{playlist.greenTotal}}</span>
+                        <span style="width:{{playlist.exceptionWidth}}px">{{playlist.amberTotal}}</span>
+                        <span style="width:{{playlist.exceptionWidth}}px">{{playlist.redTotal}}</span>
+                  </div>
+            </div>
+            <div class="row row-phone secondary-content" style="padding-top: 1px;padding-bottom: 5px">
+                <div class="col col-40 secondary-label" style="padding-top:5px;">
+                    TOTAL EXCEPTIONS: 
+                </div>
+                <!--<div class="col">
+                    <div class="bubble"><i class="ion-alert-circled"></i>{{playlist.greenTotal + playlist.amberTotal + playlist.redTotal}}</div>
+                </div>-->
+                <div class="col total-report-count">
+                        <span style="width:{{playlist.totalWidth}}px" >{{parseInt(playlist.greenTotal) + parseInt(playlist.amberTotal) + parseInt(playlist.redTotal)}}</span>
+                </div>
+            </div>
+
+            <div class="row row-phone secondary-content">
+                <div class="col secondary-label-3">
+                    <span>SIGNOFF COMMENTS : </span> {{playlist.SignedOffComments}}
+                </div>
+            </div>
+            <ion-option-button class="button-calm" ng-click="showDetailsPopup($event, playlist.intDeskId, playlist.intsheetID)">View Details</ion-option-button>
+        </ion-item>
+    </ion-list>
+    
+    </ion-content>
+</ion-view>
+
+<script id="signoff-popover.html" type="text/ng-template">
+    <ion-popover-view style="width:270px;">
+        <ion-header-bar align-title="left"> 
+            <h1 class="title">Signoff Comments</h1>
+            <div class="buttons">
+                <button class="button button-positive" ng-click="commentsDone(textcomments)">Done</button>
+            </div>
+        </ion-header-bar> 
+        <ion-content>
+            <textarea class="textAreaComments text-area-inputs" ng-model="popover.textcomments" placeholder="500 chars max" ></textarea> 
+        </ion-content>
+    </ion-popover-view>
+</script>

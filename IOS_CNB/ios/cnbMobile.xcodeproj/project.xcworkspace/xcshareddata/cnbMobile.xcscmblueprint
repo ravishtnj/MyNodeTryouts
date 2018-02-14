@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7048",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7048" : {
+      "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "branches",
+      "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "tags",
+      "DVTSourceControlWorkingCopyRepositoryPrimaryBranchLocationKey" : "trunk"
+    },
+    "1809881f-7673-be48-803f-1d6562de10e6++3322" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7048" : 0,
+    "1809881f-7673-be48-803f-1d6562de10e6++3322" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3ECEC96F-35B7-4B51-B2EF-52A48F7133AF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7048" : "November_Working\/",
+    "1809881f-7673-be48-803f-1d6562de10e6++3322" : "..\/.."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "cnbMobile",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "platforms\/ios\/cnbMobile.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.145.50.55:8080\/svn\/Planogram",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1809881f-7673-be48-803f-1d6562de10e6++3322"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/svn.hclets.com\/svn\/CITI-Mobility",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7048"
+    }
+  ]
+}

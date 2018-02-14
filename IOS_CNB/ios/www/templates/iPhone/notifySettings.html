@@ -1,0 +1,23 @@
+<ion-view view-title="Notification Settings">
+<ion-nav-buttons side="left">
+        <button class="button back-button buttons button-clear header-item" ng-click="onClickBack()">
+        </button>
+    </ion-nav-buttons>
+
+     <div class="bar notifyheader">
+        <span class="notifySettng title">Alert Categories</span>
+         <button class="button button-calm" ng-click="onSave(alertList)">Save</button>
+      </div>
+      
+ <ion-content class="has-subheader" >
+      <div class="list">      
+      
+      <div><ion-toggle ng-repeat="item in alertList" ng-model="item.subscribeFlag" ng-value = "item.subscribeFlag" ng-checked = "item.subscribeFlag" class="item-text-wrap">
+                {{item.alertType}}
+      </ion-toggle></div>
+
+    </div>
+
+  </ion-content>
+
+</ion-view>

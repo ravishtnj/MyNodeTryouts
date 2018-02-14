@@ -1,0 +1,33 @@
+<ion-view view-title="Desk Mapping">
+	
+  	<ion-content class="smAttestContent">
+  		<ion-refresher pulling-text="Pull to refresh...">
+		 </ion-refresher>
+  		<ion-list can-swipe = "true">
+  	 		<ion-item ng-repeat="deskData in deskMappingData" class="item-data-list">
+	  	 		<div class="row row-phone">
+	  	 			<div class="col col-75">
+	  	 				<div class="row deskSecondary-label">{{deskData.FieldName}}</div>
+	  	 				<div class="row ">{{deskData.DeskName}}</div>
+	  	 			</div>
+	  	 		</div>
+	  	 		<div class="row row-phone">
+	  	 			<div class="col col-67">
+	  	 				<div class="row deskSecondary-label">Value</div>
+	  	 				<div class="row ">{{deskData.Value}}</div>
+	  	 			</div>
+	  	 			<div class="col deskSecondary-label">
+	  	 				<div class="row">Comments</div>
+	  	 				<div class="row ">{{deskData["Attachment Comments"]}}</div>
+	  	 			</div>
+	  	 		</div>
+	  	 		
+	  	 		<ion-option-button class="deskApproveButton button button-balanced" ng-click="approve(deskData, 'Approve')">Approve</ion-option-button>
+	  	 		<ion-option-button class="deskRejectButton button button-assertive" ng-click="reject(deskData, 'Reject')" >Reject</ion-option-button>
+	  	 		
+			 </ion-item> 
+			 </ion-list>  
+		
+  	</ion-content>
+  	
+</ion-view>

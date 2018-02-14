@@ -1,0 +1,26 @@
+<ion-view>
+    <ion-content class="details-pop" scroll="false">
+      <div class="row">
+          <div class="col col-90" align="left">
+              <div class="item item-icon-left popup-header"><i class="icon ion-information-circled"></i>Select Role</div>
+          </div>
+          <!--<div class="col col-10" align="right" ng-click="closeDetailsPopup()"><i class="icon ion-close-round popup-close-icon" ></i></div>-->
+      </div>
+      <ion-scroll style="height:55%;">
+        <ion-list>
+            <ion-item class="item-data-list" style="padding:0">
+                <ion-radio name="adminroleoptions" ng-model="adminRoleValue.value" value="1" >Line Manager</ion-radio>
+            </ion-item>
+            <ion-item class="item-data-list"  style="padding:0">
+                <ion-radio name="adminroleoptions" ng-model="adminRoleValue.value" value="2">Senior Manager</ion-radio>
+            </ion-item>
+            <!--<ion-item class="item-data-list"  style="padding:0">
+                <ion-radio name="adminroleoptions" ng-model="adminRoleValue.value" value="3">Normal User</ion-radio>
+            </ion-item> -->
+        </ion-list>
+      </ion-scroll>
+    </ion-content>
+    <div class="bar bar-footer" style="padding: 0;margin: 0;" >
+      <button style="margin:0;font-size:18px;" ng-click="applyAdminAccess(adminRoleValue.value)" class="button button-positive button-full button">Apply</button>
+    </div>
+</ion-view>

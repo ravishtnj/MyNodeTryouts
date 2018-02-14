@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.citi.cnbdash" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="LocalStorage">
+        <param name="ios-package" value="CDVLocalStorage" />
+    </feature>
+    <feature name="GDStorage">
+        <param name="ios-package" value="GDCStoragePlugin" />
+    </feature>
+    <feature name="GDApplication">
+        <param name="ios-package" value="GDCApplicationPlugin" />
+    </feature>
+    <feature name="GDDocuments">
+        <param name="ios-package" value="GDCDocumentsPlugin" />
+    </feature>
+    <feature name="GDInterAppCommunication">
+        <param name="ios-package" value="GDInterAppCommunicationPlugin" />
+    </feature>
+    <feature name="GDFileTransfer">
+        <param name="ios-package" value="GDCFileTransferPlugin" />
+    </feature>
+    <feature name="GDHttpRequest">
+        <param name="ios-package" value="GDCHttpRequestPlugin" />
+    </feature>
+    <feature name="GDPush">
+        <param name="ios-package" value="GDCPushPlugin" />
+    </feature>
+    <feature name="GDSQLite">
+        <param name="ios-package" value="GDCSQLitePlugin" />
+    </feature>
+    <feature name="GDSocket">
+        <param name="ios-package" value="GDCSocketPlugin" />
+    </feature>
+    <feature name="GDTokenHelper">
+        <param name="ios-package" value="GDTokenHelperPlugin" />
+    </feature>
+    <feature name="GDAppKinetics">
+        <param name="ios-package" value="GDAppKineticsPlugin" />
+    </feature>
+    <feature name="GDSpecificPolicies">
+        <param name="ios-package" value="GDSpecificPoliciesPlugin" />
+    </feature>
+    <feature name="GDServerSideServices">
+        <param name="ios-package" value="GDServerSideServicesPlugin" />
+    </feature>
+    <feature name="DatePicker">
+        <param name="ios-package" value="DatePicker" />
+    </feature>
+    <feature name="SpinnerDialog">
+        <param name="ios-package" value="CDVSpinnerDialog" />
+    </feature>
+    <feature name="Toast">
+        <param name="ios-package" value="Toast" />
+    </feature>
+    <name>cnbMobile</name>
+    <access origin="*" />
+    <feature name="SpinnerPlugin">
+        <param name="ios-package" value="SpinnerPlugin" />
+    </feature>
+    <name>cnbMobile</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <hook src="hooks/appBeforePrepare.sh" type="before_prepare" />
+    <hook src="hooks/appAfterBuild.sh" type="after_prepare" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="GapBetweenPages" value="0" />
+    <preference name="PageLength" value="0" />
+    <preference name="PaginationBreakingMode" value="page" />
+    <preference name="PaginationMode" value="unpaginated" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+</widget>

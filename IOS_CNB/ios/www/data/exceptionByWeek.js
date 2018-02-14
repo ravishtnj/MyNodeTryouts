@@ -1,0 +1,10 @@
+{
+	"exceptionsByMonth":[
+		{"exceptions":"0","reportDate":"2016/7/29"},
+		{"exceptions":"17","reportDate":"2016/7/22"},
+		{"exceptions":"0","reportDate":"2016/7/15"},
+		{"exceptions":"0","reportDate":"2016/7/8"},
+		{"exceptions":"0","reportDate":"2016/7/1"},
+		{"exceptions":"0","reportDate":"2016/6/24"}
+	]
+}

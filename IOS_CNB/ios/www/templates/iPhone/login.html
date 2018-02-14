@@ -1,0 +1,45 @@
+<ion-view>
+<!--
+  <ion-header-bar>
+    <h1 class="title">Login</h1>
+   </ion-header-bar>
+  <ion-content>
+  <div class="logoContainer">
+  <img src="img/citi.png" class="centredisplay">
+  </div>
+  <div class="logoContainer">
+    <form ng-submit="doLogin(loginData)">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="loginData.username">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+      </div>
+    </form>
+    </div>
+ <div class="padding-top text-display" align="center">
+   </ion-content>-->
+   <ion-content scroll="false" class="iphone landing-options">
+       <div class="row">
+           <div class="col" align="right" style="padding-top: 15px;"><img src="img/citi-logo.png" height="50px;"></div>
+       </div>
+    <div class="row row-line">
+          <div class="col" ng-click="getApplicationConfiguration(); alert('Clicked');">
+              <img src="img/cnb_logo.png" class="centredisplay">
+              <div class="padding-top text-display" align="center">Control and Break <br/> Dashboard</div>
+              <div class="padding-top text-display" align="center"><span style="font-size:18px;font-weight:600;">Tap to Continue</span></div>
+          </div>
+      </div>
+    <div class="row">
+        <div class="col" align="right" style="padding-top:25px;"><span style="font-size:10px;color:white;">V 1.1(D)</span></div>
+    </div>
+
+    </ion-content>
+</ion-view>

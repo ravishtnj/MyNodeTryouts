@@ -1,0 +1,81 @@
+<ion-view view-title="Dashboard">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right"></button>
+  </ion-nav-buttons>
+    <ion-content class="ipad dashboard-holder" >
+    	<ion-refresher
+	    pulling-text="Pull to refresh..."
+	    on-refresh="callLocalOrService(isService)">
+	  </ion-refresher>
+        <div class="metrics-blue-bar">
+            <div class="row">
+                <div class="col col-20" align="center">
+                    Outstanding Exceptions
+                </div>
+                <div class="col col-20 metrics-blue-bar"  align="center">
+                    Red & Amber Exceptions
+                </div>
+                <div class="col col-20 metrics-blue-bar"  align="center">
+                    Red Items
+                </div>
+                <div class="col col-20 metrics-blue-bar"  align="center">
+                    Amber Items
+                </div>
+                <div class="col col-20 metrics-blue-bar"  align="center">
+                    Green Items
+                </div>
+            </div>
+       </div>
+        <div class="row row-phone padding-bottom" style="padding-bottom:5px;padding-top:10px;">
+            <div class="col col-20">
+                <nvd3 options='outStandingOptions' data='outStandingData'></nvd3>
+            </div>
+            <div class="col col-20">
+                <nvd3 options='redAmberOptions' data='redAmberData'></nvd3>
+            </div>
+            <div class="col col-20" style="padding-top:10px;padding-left: 8px;">
+                <div width="90%" ng-radial-gauge ranges="Redranges" value="redValue" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+            </div>
+            <div class="col col-20">
+                <div width="90%" ng-radial-gauge ranges="Amberranges" value="amberValue" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+            </div>
+            <div class="col col-20">
+                <div width="90%" ng-radial-gauge ranges="Greenranges" value="greenValue" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit" ></div>
+            </div>
+        </div>
+        <div class="row row-phone">
+            <div class="col col-20" align="center">
+                &nbsp;
+            </div>
+            <div class="col col-offset-20 col-20" style="color:#bb0000" align="center">
+                {{redDispValue}}
+            </div>
+            <div class="col col-20" style="color:#dc7700" align="center">
+                {{amberDispValue}}
+            </div>
+            <div class="col col-20" style="color:#0b4a02" align="center">
+                {{greenDispValue}}
+            </div>
+        </div>
+        <div class="row row-phone">
+            <div class="col metrics-blue-bar">Outstanding excpetions by category</div>
+            <div class="col metrics-blue-bar">Outstanding breaks across products</div>
+        </div>
+        <div class="row row-phone">
+            <div class="col">
+                <nvd3 options='graphBarOptions3' config='config' data='graphBarData3'></nvd3>
+            </div>
+            <div class="col">
+                <nvd3 options='graphBarOptions1' config='config' data='graphBarData1'></nvd3>
+            </div>
+        </div>
+        <div class="row row-phone">
+            <div class="col metrics-blue-bar">Outstanding breaks across functions</div>
+        </div>
+        <div class="row row-phone">
+            <div class="col col-50">
+                 <nvd3 options='graphBarOptions2' config='config' data='graphBarData2'></nvd3>
+            </div>
+        </div>
+            </ion-content>
+</ion-view>

@@ -1,0 +1,142 @@
+<ion-view view-title="Pending Actionables" >
+	<ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right"></button>
+    </ion-nav-buttons>
+  	<ion-content>
+  		<ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="callLocalOrService(isService)">
+        </ion-refresher>
+	    <ion-tabs class="tabs-positive dashboard-tab customed">
+            <ion-tab title="Uncommented<br/>Red Items">
+                <!-- Tab 2 content -->
+                <ion-view class="filter-tab-view" name="about-tab">
+                    <ion-list can-swipe="true" >
+                    	<div class="row" ng-show="showUncommentedRedItems" >
+					  	 	<div class="col" align="center">No data available</div>
+					  	</div>
+                    	<div ng-repeat="item in summaryStatusData.uncommentedRedItems">
+							<ion-item style="font-size:14px; font-weight:bold;white-space: normal;background-color: #25346D;color: #ffffff;" class="item-divider item-static item item-icon-right" ng-show="item.showCategory" ng-click="toggleGroup(item)" ng-class="{active: isGroupShown(item)}">
+								<div class="row" style="padding:0">
+					            	<div class="col col-90" style="padding:0;color: #ffffff;">{{item.categoryName}}</div>
+					            	<div class="col col-10" style="padding:0;color: #ffffff;"><i style="font-size:18px;" class="icon icon-right" align="right" ng-class="isGroupShown(item) ? 'ion-chevron-down' : 'ion-chevron-right'"></i></div>
+					            </div>
+							</ion-item>
+							<div ng-show="isGroupShown(item)" >
+								<div class="row" ng-show="{{item.records.length}} == 0" >
+						  	 		<div class="col" align="center">No data available</div>
+						  	 	</div>
+								<div ng-repeat="list in item.recordsGroup">
+		                        	<ion-item style="background-color:#1d9bcc; font-size:13px; font-weight:bold; border-bottom:0px;" class="item-divider item-static item item-icon-right">{{list.name}}</ion-item>
+		                        	<div ng-show="isGroupShown(item)" >
+			                        	<ion-item ng-repeat="innerlist in list.data" class="item-details-list">
+				                            <div style="padding:0;" class="row row-phone row-metrics">
+								 				<div class="col" style="white-space: initial;">
+								 					{{innerlist.vcrDesc}}
+								 				</div>
+								 			</div>
+				                            <div style="padding:0;margin-top:3px;" class="row row-phone row-metrics">
+								 				<div style="padding: 1px 5px 3px 5px" class="col col-45	secondary-label" style="white-space: initial;margin-top:3px;">UNCOMMENTED RED ITEMS</div>
+								 				<div style="padding: 3px 5px 3px 5px" class="col signoff-status status-commentary" style="padding-top:10px;">
+											  	  <progress max="{{innerlist.redTotal}}" value="{{innerlist.redUncommentedCount}}"> </progress>
+								 				</div>
+								 				<div style="padding: 3px 5px 3px 5px" class="col col-15 exceptions" style="padding-top:10px;" >{{innerlist.redUncommentedCount}} / {{innerlist.redTotal}}</div>
+								 			</div>
+								 			<ion-option-button class="button-calm" ng-click="openNotifyModal(innerlist.ReportName,innerlist.vcrDesc)">Notify</ion-option-button>
+				                        </ion-item>
+			                    	</div>
+		                        </div>
+	                    	</div>
+                    	</div>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+
+            <ion-tab title="Awaiting<br/>Reports">
+                <!-- Tab 1 content -->
+                <ion-view class="filter-tab-view" name="home-tab">
+                    <ion-list can-swipe="false" >
+                    	<div class="row" ng-show="showAwaitingReports" >
+					  	 	<div class="col" align="center">No data available</div>
+					  	</div>
+						<div ng-repeat="item in summaryStatusData.awaitingReports">
+							<ion-item style="font-size:14px; font-weight:bold;white-space: normal;background-color: #25346D;color: #ffffff;" class="item-divider item-static item item-icon-right" ng-show="item.showCategory" ng-click="toggleGroup(item)" ng-class="{active: isGroupShown(item)}">
+								<div class="row" style="padding:0">
+					            	<div class="col col-90" style="padding:0;color: #ffffff;">{{item.categoryName}}</div>
+					            	<div class="col col-10" style="padding:0;color: #ffffff;"><i style="font-size:18px;" class="icon icon-right" align="right" ng-class="isGroupShown(item) ? 'ion-chevron-down' : 'ion-chevron-right'"></i></div>
+					            </div>
+							</ion-item>
+	                        <div ng-repeat="list in item.recordsGroup" ng-show="isGroupShown(item)">
+	                        	<ion-item style="background-color:#1d9bcc; font-size:13px; font-weight:bold; border-bottom:0px;" class="item-divider item-static item item-icon-right">{{list.name}}</ion-item>
+	                        	<ion-item style="padding: 4px 0 4px 25px;" ng-repeat="innerlist in list.data" class="item-details-list">
+	                        		<h2 style="color:#424242;white-space: initial;font-size:13px;">{{innerlist.vcrDesc}}</h2>
+	                        	</ion>
+	                        </div>
+                    	</div>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+            
+            <ion-tab title="Pending<br/>Signoff">
+                <!-- Tab 3 content -->
+                <ion-view class="filter-tab-view" name="settings-tab">
+                    <ion-list can-swipe="true" >
+                    	<div class="bar bar-positive" >
+						  <h1 class="title" style="text-align:left;font-size: 16px;" >Select Reports to Sign off</h1>
+						  <button class="signoff button button-balanced" ng-disabled="disableSignOff" ng-click="disableSignOff || showSummarySignoffPopup()">Sign off</button>
+						</div>
+						<div style="padding-top:40px;" >
+							<div class="row" ng-show="disableSignOff" >
+						  	 	<div class="col" align="center">No data available</div>
+						  	</div>
+						  	<div ng-repeat="item in summaryStatusData.pendingSignoff">
+						  		<ion-item style="font-size:14px; font-weight:bold;white-space: normal;background-color: #25346D;color: #ffffff;" class="item-divider item-static item item-icon-right">
+									<div class="row" style="padding:0">
+						            	<div class="col col-90" style="padding:0;color: #ffffff;">{{item.categoryName}}</div>
+						            </div>
+								</ion-item>
+								<div class="row" ng-show="{{item.records.length}} == 0" >
+							  	 	<div class="col" align="center">No data available</div>
+							  	</div>
+						  		<ion-item ng-repeat="list in item.records" style="padding:0 16px;" class="item-details-list">
+	                            <div class="row row-phone">
+					                <div class="col col-10">
+					                    <ion-checkbox class="signoff-check {{list.checkboxClass}}" ng-disabled="list.checkboxDisabled" ng-model="list.checkboxStatus" style="width:35px;height:35px">&nbsp;</ion-checkbox>
+					                </div>
+					                <div class="col col-90 align-details-header" style="white-space:initial;">
+					                    <span class="details-head" style="font-size: 16px;">{{list.ReportName}}</span> <span  style="padding-left:5px;"> For {{list.vcrDesc}} </span>
+					                </div>
+					            </div>
+					            <div class="row row-phone secondary-line">
+					                <div class="col col-40 secondary-label">
+					                    UNCOMMENTED RED ITEMS
+					                </div>
+					                <div class="col secondary-label" align="right">
+					                    EXCEPTIONS PROFILE
+					                </div>
+					            </div>
+					            <div class="row row-phone secondary-content">
+					                <div class="col signoff-status status-commentary">
+					                    <progress max="{{list.redTotal}}" value="{{list.redUncommentedCount}}"> </progress>
+					                </div>
+					                <div class="col col-20 exceptions" >
+					                    {{list.redUncommentedCount}} / {{list.redTotal}}
+					                </div>
+					                <div class="col profile-exceptions" align="right">
+					                        <span style="width:{{list.exceptionWidth}}px">{{list.greenTotal}}</span>
+					                        <span style="width:{{list.exceptionWidth}}px">{{list.amberTotal}}</span>
+					                        <span style="width:{{list.exceptionWidth}}px">{{list.redTotal}}</span>
+					                  </div>
+					            </div>
+					            <ion-option-button class="button-calm" ng-click="showDetailsPopup($event, list.intDeskId, list.intsheetID)">View Details</ion-option-button>
+	                        </ion-item>
+						  	</div>
+                    	</div>
+                    </ion-list>
+                </ion-view>
+            </ion-tab>
+        </ion-tabs>
+  	</ion-content>
+</ion-view>
+
+

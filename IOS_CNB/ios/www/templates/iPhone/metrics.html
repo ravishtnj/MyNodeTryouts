@@ -1,0 +1,123 @@
+<ion-view view-title="Dashboard summary" >
+  <ion-nav-buttons side="right">
+  		<!--<button class="signoff button button-balanced" ng-click="goSignOff($event)">Sign Off</button>-->
+        <button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right" style="margin: 5px 0px 0px 15px;"  ></button>
+  </ion-nav-buttons>
+  <ion-content class="iphone metrics">
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="callLocalOrService(isService)">
+  </ion-refresher>
+  <ion-searchbar ng-model="listData"></ion-searchbar>
+  	<ion-list>
+  		<div class="row" ng-show="showNoDataAvail" >
+			<div class="col" align="center">No data available</div>
+		</div>
+	 	<div ng-repeat="item in listData">
+	 		<ion-item class="item-divider item-static item item-icon-right">{{item.categoryName}}</ion-item>
+	 		<!-- ng-click="{{list.pendingSignoff}} == 0 || navigateToDetails(item.categoryId, list.vcrReportCat)" -->
+	  	 	<div class="row" ng-show="{{item.records.length}} == 0" >
+	  	 		<div class="col" align="center">No Exception Items</div>
+	  	 	</div>
+	  	 	<!--  -->
+	 		<ion-item ng-repeat="list in item.records" class="item-data-list" ng-click="navigateToDetails(item.categoryId, list.intReportCatId)" >
+	 			<div class="row row-phone row-metrics">
+	 				<div class="col col-90"><h2>{{list.ReportCategory}}</h2></div>
+	 				<!-- ng-show="{{list.pendingSignoff}} > 0"  -->
+	 				<div class="col col-10 navigator item item-icon-right" align="right"><i class="ion-chevron-right nav-icon"></i></div>
+	 			</div>
+	 			<div class="row row-phone row-metrics">
+	 				<div class="col col-50	secondary-label">REPORTS PENDING SIGNOFF</div>
+	 				<div class="col col-50	secondary-label">UNCOMMENTED RED ITEMS</div>
+	 			</div>
+	 			<div class="row row-phone row-metrics">
+	 				<div class="col signoff-status" align="center">
+	 					<!--<progress max="{{list.count}}" value="{{list.pendingSignoff}}"> </progress>-->
+	 					<!--<canvas id="doughnut" class="chart chart-doughnut chart-alignment" height="75px" width="75px"
+						  chart-data="list.dataset" chart-labels="list.labels" chart-colours="list.colours">
+						</canvas> -->
+						<nvd3 options='reportsPendingOptions' data='list.dataset'></nvd3>
+	 				</div>
+	 				<div class="col col-20	 chart-label-alignment">
+				  		{{list.pendingSignoff}} / {{list.count}}
+				  </div>
+				  <div class="col signoff-status status-commentary" style="padding-top:10px;">
+				  	  <progress max="{{list.redTotal}}" value="{{list.redUncommentedCount}}"> </progress>
+	 				</div>
+	 				<div class="col col-20 exceptions" style="padding-top:10px;" >{{list.redUncommentedCount}} / {{list.redTotal}}</div>
+	 					
+	 			</div>
+	 			<div class="row row-phone row-metrics">
+	 				<div class="col col-50 secondary-label">EXCEPTIONS PROFILE</div>
+	 				<div class="col col-50 secondary-label">TOTAL EXCEPTIONS</div>
+	 				<!--<div class="col secondary-label" align="left">TOTAL</div>-->
+	 			</div>
+	 			<div class="row row-phone row-metrics" style="padding-bottom:10px;">
+	 				<div class="col col-50 profile-exceptions bulksignoff">
+	 					<span style="width:{{list.exceptionWidth}}px">{{list.greenTotal}}</span>
+	 					<span style="width:{{list.exceptionWidth}}px">{{list.amberTotal}}</span>
+	 					<span style="width:{{list.exceptionWidth}}px">{{list.redTotal}}</span>
+	 				</div>
+	 				<!--
+	 				<div class="col col-50">
+	 					<div class="bubble"><i class="ion-alert-circled"></i>{{list.pendingCommentary}}</div>
+	 				</div>
+	 				-->
+	 				<div class="col col-50 total-report-count">
+	 					<span style="width:{{list.totalWidth}}px">{{parseInt(list.greenTotal) + parseInt(list.amberTotal) + parseInt(list.redTotal)}}</span>
+	 				</div>
+		 		</div>
+		 		<!--
+		 	<ion-list>
+		 		<ion-item ng-repeat="playlist in list.records" class="item-details-list">
+            <div class="row row-phone">
+                <div class="col col-10">
+                    <ion-checkbox class="signoff-check" ng-disabled="playlist.checkboxDisabled" ng-model="playlist.checkboxStatus" style="width:35px;height:35px">&nbsp;</ion-checkbox>
+                </div>
+                <div class="col col-90 align-details-header" style="white-space:initial;">
+                    <span class="details-head" style="font-size: 16px;">{{playlist.ReportName}}</span> <span  style="padding-left:5px;"> For {{playlist.vcrDesc}} </span>
+                </div>
+            </div>
+            <div class="row row-phone secondary-line">
+                <div class="col col-40 secondary-label">
+                    UNCOMMENTED RED ITEMS
+                </div>
+                <div class="col secondary-label" align="right">
+                    EXCEPTIONS PROFILE
+                </div>
+            </div>
+            <div class="row row-phone secondary-content">
+                <div class="col signoff-status status-commentary">
+                    <progress max="{{playlist.redTotal}}" value="{{playlist.redUncommentedCount}}"> </progress>
+                </div>
+                <div class="col col-20 exceptions" >
+                    {{playlist.redUncommentedCount}} / {{playlist.redTotal}}
+                </div>
+                <div class="col profile-exceptions" align="right">
+                      <span>{{playlist.greenTotal}}</span>
+                      <span>{{playlist.amberTotal}}</span>
+                      <span>{{playlist.redTotal}}</span>
+                  </div>
+            </div>
+            <div class="row row-phone secondary-content" style="padding-top: 1px;padding-bottom: 5px">
+                <div class="col col-40 secondary-label" style="padding-top:5px;">
+                    TOTAL EXCEPTIONS: 
+                </div>
+                <div class="col total-report-count">
+                        <span>{{parseInt(playlist.greenTotal) + parseInt(playlist.amberTotal) + parseInt(playlist.redTotal)}}</span>
+                </div>
+            </div>
+
+            <div class="row row-phone secondary-content">
+                <div class="col secondary-label-3">
+                    <span>SIGNOFF COMMENTS : </span> {{playlist.SummaryComments}}
+                </div>
+            </div>
+            <ion-option-button class="button-calm" ng-click="showDetailsPopup($event, playlist.intDeskId)">View Details</ion-option-button>
+        </ion-item>
+    </ion-list>-->
+	 		</ion-item>
+	 	</div>
+	</ion-list>
+  </ion-content>
+</ion-view>

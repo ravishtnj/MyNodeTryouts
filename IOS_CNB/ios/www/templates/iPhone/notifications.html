@@ -1,0 +1,23 @@
+<ion-view view-title="Notification">
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-gear-a" ng-click="setingsClick($event)">
+        </button>
+    </ion-nav-buttons>
+   <!--  <div class="bar notifyheader">
+        <h1 class="notifyTitle title">All Alerts</h1>
+    </div> -->
+    <ion-content class="iPhone metrics">
+ 	<div class="list">
+	    <div ng-repeat="respData in alertToFilter() | filter:alertDate  | orderBy : '-formatedDate'">
+	        <ion-item class="notify">
+	            <div class="notifyDivider  notify-divider ">
+	                {{respData.formatedDate | date : 'mediumDate' }}</div>
+	            <div class="row formattext" ng-repeat="alertData in groupArray | filter:{recievedDate: respData.recievedDate } | orderBy : '-formatedDate'">
+                    <div class="col col-75 " ng-click="goto(alertData,$event)" alertCptn = {{alertData.alertCptn}} status = {{alertData.status}} >  {{alertData.text}} </div>
+	                 <div class="col col-25 secondary-label" align="right">{{alertData.formatedDate | date :'shortTime'}}</div>
+	            </div>
+	        </ion-item>
+	    </div>
+	</div>
+</ion-content>
+</ion-view>

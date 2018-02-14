@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3ECEC96F-35B7-4B51-B2EF-52A48F7133AF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>cnbMobile</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7124</key>
+		<string>https://anand.rama@svn.hclets.com/svn/CITI-Mobility/trunk/CnB/POC</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>cnbMobile/platforms/ios/cnbMobile.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7124</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7124</key>
+		<string>https://anand.rama@svn.hclets.com/svn/CITI-Mobility</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://anand.rama@svn.hclets.com/svn/CITI-Mobility/trunk/CnB/POC/cnbMobile/platforms/ios/cnbMobile.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7124</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>c355bd04-8ecd-4fbd-9c35-1a63ae0fd0d9++7124</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CitiMobilePoc</string>
+		</dict>
+	</array>
+</dict>
+</plist>
