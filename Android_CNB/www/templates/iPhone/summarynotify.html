@@ -1,0 +1,22 @@
+<ion-modal-view>
+	<ion-header-bar style="background-color:#0A93C7;" class="bar-stable bar bar-header">
+		<h1 class="title">Notify</h1>
+		<button class="button button-icon button-clear notify-button ion-close" ng-click="closeNotifyModal()" align="right"></button>
+	</ion-header-bar>
+	<ion-content scroll="false" style="height:100vh">
+		<ion-scroll style="height:60vh;" >
+			<ion-list class="notify-list" ng-repeat="list in actionableUserList.pendingActionableUserList">
+				<ion-checkbox ng-model="list.checkBoxStatus" ng-value="'list.intUserId'">{{list.vcrFirstName}} {{list.vcrLastName}}</ion-checkbox>
+			</ion-list>
+		</ion-scroll>
+		<div class=" managerComment" style="height:30%; bottom:0;">
+			<div class="item item-divider">
+				Comments
+			</div>
+			<textarea name="comment" ng-model="notifymodal.escalationComment" placeholder="Please provide the comments for respective desks..." cols="40" rows="5"></textarea>
+		</div>
+	</ion-content>
+	<div class="bar bar-footer" style="padding: 0;margin: 0;" >
+		<button style="margin:0;" ng-click="triggetNotificationMail(escalationComment)" class="button button-positive button-full button">Send</button>
+	</div>
+</ion-modal-view>

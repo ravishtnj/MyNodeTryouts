@@ -1,0 +1,385 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content drag-content="false" >
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button ng-click="onClickBack()" ></ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon menu-icon" menu-toggle="left"></button>
+            </ion-nav-buttons>
+
+
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left" class="sidemenu">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Menu</h1>
+        </ion-header-bar>
+        <ion-content class="content-menu">
+            <ion-list>
+                <ion-item class="item-icon-left  item-icon-right linkcontent" ng-click="setDBFilterOptions('false')" menu-close href="#/app/landing" >
+                    <i class="icon icon-left menu-list1 ion-speedometer"></i>
+                    MIS Dashboard
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>
+                <ion-item class="item-icon-left item-icon-right linkcontent" ng-click="resetSummaryFilterOptions()" menu-close href="#/app/summary">
+                    <i class="icon icon-left menu-list6 ion-clipboard"></i>
+                    Pending actionables
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>
+                <ion-item class="item-icon-left item-icon-right linkcontent" ng-click="resetFilterOptions()" menu-close href="#/app/metrics">
+                    <i class="icon icon-left menu-list2 ion-podium"></i>
+                    Dashboard summary
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>
+                <ion-item ng-show="entitlementsData.showManagerAttestation" class="item-icon-left item-icon-right linkcontent" ng-click="updateFilterOptions()" menu-close href="#/app/attestation">
+                    <i class="icon icon-left menu-list3 ion-compose"></i>
+                    Manager Attestation
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>
+                <ion-item ng-show="entitlementsData.showSeniorManagerAttestation" class="item-icon-left item-icon-right linkcontent" ng-click="updateSAFilterOptions()" menu-close href="#/app/smAttestation">
+                    <i class="icon icon-left menu-list3 ion-compose"></i>
+                    Senior Manager Attestation
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>
+                <!--<ion-item class="item-icon-left item-icon-right linkcontent" menu-close href="#/app/settings">
+                    <i class="icon icon-left menu-list4 ion-gear-b"></i>
+                    Settings coming soon
+                    <i class="icon icon-right  ion-chevron-right"></i>
+                </ion-item>-->
+                <ion-item class="item-icon-left item-icon-right linkcontent" ng-click="logoutApp()" menu-close href="javascript:void(0)">
+                    <i class="icon icon-left menu-list5 ion-power"></i>
+                    Logout
+                    <i class="icon icon-right ion-chevron-right"></i>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+    <ion-side-menu side="right" class="sidemenu">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Filters</h1>
+        </ion-header-bar>
+        <ion-content class="content-menu has-tabs" scroll="false" style="bottom:47px;" >
+            <!-- MIS Dashboard Filters - 0 -->
+            <ion-tabs class="tabs-icon-top tabs-icon-only tabs-positive filter-tabs">
+                <ion-tab hidden="{{businessDashboardFilterHide}}" title="Business" icon="ion-briefcase" >
+                    <ion-view class="filter-tab-view" name="contact-tab">
+                        <div class="card" ng-show = "businessDashboardfilters.selected == '0'" >
+                            <div class="item item-text-wrap item-icon-left" style="font-size: 11px;color:#0a93c7;">
+                                <i class="icon ion-information-circled"></i>
+                                Please select atleast one Business Filter to enable Region and Desk filter tabs.
+                            </div>
+                        </div>
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in businessDashboardfilters.data" class="item-data-list">
+                                <ion-radio name="businessdashboardfilteroptions" ng-model="businessDashboardfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerRegionFilter('DASHBOARD')"  >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{regionDashboardFilterHide}}" disabled="regionDashboardFilterDisabled" title="Region" icon="ion-ios-world" >
+                    <ion-view class="filter-tab-view" name="home-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in regionDashboardfilters.data" class="item-data-list">
+                                <ion-radio name="regiondashboardfilteroptions" ng-model="regionDashboardfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerDeskFilter('DASHBOARD')" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{deskDashboardFilterHide}}" class="filtertabs"  disabled="deskDashboardFilterDisabled" title="Desk" icon="ion-filing" >
+                    <div class="bar bar-subheader bar-calm desksearch" syle="top:50px">
+                        <label class="item-input-wrapper">
+                            <input style="width:100%" type="search" placeholder="Search Desk" ng-model="searchDashboardDeskFilter" >
+                        </label>
+                    </div>
+                    <ion-view class="filter-tab-view desk-tab" name="desk-tab">
+                        <ion-scroll style="height:82%;" scrollbar-x="false" scrollbar-y="false" >
+                            <ion-list class="filter-list-data">
+                                <ion-item class="item-data-list">
+                                    <ion-checkbox ng-model="deskCheckAllDasboardStatus" ng-change="triggerAllOptionsDashboard(deskCheckAllDasboardStatus)" >All</ion-checkbox>
+                                </ion-item>
+                                <div ng-repeat="list in deskDashboardfilters | filter:searchDashboardDeskFilter" >
+                                    <ion-item class="item-divider item-static list-details-header">{{list.name}}</ion-item>
+                                    <ion-item ng-repeat="listchild in list.children | filter:searchDashboardDeskFilter" class="item-data-list">
+                                        <ion-checkbox ng-model="listchild.deskStatus" ng-change="setCurrentCheckBoxDashboard(listchild.deskStatus,listchild.id)" >{{listchild.name}}</ion-checkbox>
+                                    </ion-item>
+                                </div>
+                            </ion-list>
+                        </ion-scroll>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{dateDashboardFilterHide}}" title="Date" icon="ion-document-text" >
+                    <ion-view class="filter-tab-view" name="test-tab">
+                        <div class="list">
+                            <label class="item item-input filter-date">
+                                <input type="text" ng-readonly="true" ng-click="showFilterDBDatePicker()"  ng-model="defaultSelectedFilters.dateDashboardfilter" placeholder="Date">
+                            </label>
+                        </div>
+                    </ion-view>
+                </ion-tab>
+                <!-- MIS Dashboard Filters - 3 -->
+
+                <!-- Summary Dashboard Filters - 4 -->
+                <ion-tab hidden="{{businessFilterHide}}" title="Business" icon="ion-briefcase" >
+                    <ion-view class="filter-tab-view" name="contact-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in businessfilters.data" class="item-data-list">
+                                <ion-radio name="businessfilteroptions" ng-model="businessfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerRegionFilter('SUMMARY')"  >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{regionFilterHide}}" title="Region" icon="ion-ios-world" >
+                    <ion-view class="filter-tab-view" name="home-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in regionfilters.data" class="item-data-list">
+                                <ion-radio name="regionfilteroptions" ng-model="regionfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerDeskFilter('SUMMARY')" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{deskFilterHide}}" class="filtertabs" title="Desk" icon="ion-filing" >
+                    <div class="bar bar-subheader bar-calm desksearch" syle="top:50px">
+                        <label class="item-input-wrapper">
+                            <input style="width:100%" type="search" placeholder="Search Desk" ng-model="searchFilter" >
+                        </label>
+                    </div>
+                    <ion-view class="filter-tab-view desk-tab" name="desk-tab">
+                        <ion-scroll style="height:82%;" scrollbar-x="false" scrollbar-y="false" >
+                            <ion-list class="filter-list-data">
+                                <ion-item class="item-data-list">
+                                    <ion-checkbox ng-model="deskCheckAllStatus" ng-change="triggerAllOptions(deskCheckAllStatus)" >All</ion-checkbox>
+                                </ion-item>
+                                <div ng-repeat="list in deskfilters | filter:searchFilter" >
+                                    <ion-item class="item-divider item-static list-details-header">{{list.name}}</ion-item>
+                                    <ion-item ng-repeat="listchild in list.children | filter:searchFilter" class="item-data-list">
+                                        <ion-checkbox ng-model="listchild.deskStatus" ng-change="setCurrentCheckBox(listchild.deskStatus,listchild.id)" >{{listchild.name}}</ion-checkbox>
+                                    </ion-item>
+                                </div>
+                            </ion-list>
+                        </ion-scroll>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{dateFilterHide}}" title="Date" icon="ion-document-text" >
+                    <ion-view class="filter-tab-view" name="test-tab">
+                        <div class="list">
+                            <label class="item item-input filter-date">
+                                <input type="text" ng-readonly="true" ng-click="showFilterDatePicker()"  ng-model="defaultSelectedFilters.datefilter" placeholder="Date">
+                            </label>
+                        </div>
+                    </ion-view>
+                </ion-tab>
+                <!-- Summary Dashboard Filters - 7 -->
+
+                <!-- Manager Attestation Filters - 8 -->
+                <ion-tab hidden="{{businessAttesationFilterHide}}" title="Business" icon="ion-briefcase" >
+                    <ion-view class="filter-tab-view" name="contact-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in businessAttesationfilters.data" class="item-data-list">
+                                <ion-radio name="businessAttesationfilteroptions" ng-model="businessAttesationfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerAttesationBusinessRegionFilter('ATTESATION')"  >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{attestationRegionFilterHide}}" title="Region" icon="ion-ios-world" >
+                    <ion-view class="filter-tab-view" name="attestationdesk-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in regionAttesationfilters.data" class="item-data-list">
+                                <ion-radio name="attestationregionfilteroptions" ng-model="regionAttesationfilters.selected" ng-click="triggerAttestationRegionFilter()" ng-value="'{{list[0]}}'" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{productFilterHide}}" title="Products" icon="ion-folder" >
+                    <ion-view class="filter-tab-view" name="home-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in productFilter.data" class="item-data-list">
+                                <ion-radio name="productilteroptions" ng-model="productFilter.selected" ng-value="'{{list[0]}}'" ng-click="getAttestationDeskFilter()" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{attestationDeskFilterHide}}" title="Desk" icon="ion-filing" >
+                    <ion-view class="filter-tab-view" name="attestationdesk-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in attestationDeskFilter.data" class="item-data-list">
+                                <ion-radio name="attestationdeskfilteroptions" ng-model="attestationDeskFilter.selected" ng-value="'{{list[0]}}'" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+                <!-- Manager Attestation Filters - 11 -->
+
+                <!-- Pending Actionables Filters - 12 -->
+                <ion-tab hidden="{{businessSummaryFilterHide}}" title="Business" icon="ion-briefcase" >
+                    <ion-view class="filter-tab-view" name="contact-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in businessSummaryfilters.data" class="item-data-list">
+                                <ion-radio name="businesssummaryfilteroptions" ng-model="businessSummaryfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerRegionFilter('STATUSSUMMARY')"  >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{regionSummaryFilterHide}}" title="Region" icon="ion-ios-world" >
+                    <ion-view class="filter-tab-view" name="home-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in regionSummaryfilters.data" class="item-data-list">
+                                <ion-radio name="regionSummaryfiltersOptions" ng-model="regionSummaryfilters.selected" ng-value="'{{list[0]}}'" ng-click="triggerDeskFilter('STATUSSUMMARY')" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{deskSummaryFilterHide}}" class="filtertabs" title="Desk" icon="ion-filing" >
+                    <div class="bar bar-subheader bar-calm desksearch" syle="top:50px">
+                        <label class="item-input-wrapper">
+                            <input style="width:100%" type="search" placeholder="Search Desk" ng-model="searchSummaryFilter" >
+                        </label>
+                    </div>
+                    <ion-view class="filter-tab-view desk-tab" name="desk-tab">
+                        <ion-scroll style="height:82%;" scrollbar-x="false" scrollbar-y="false" >
+                            <ion-list class="filter-list-data">
+                                <ion-item class="item-data-list">
+                                    <ion-checkbox ng-model="deskCheckSummaryAllStatus" ng-change="triggerAllOptionsSummary(deskCheckSummaryAllStatus)" >All</ion-checkbox>
+                                </ion-item>
+                                <div ng-repeat="list in deskSummaryfilters | filter:searchSummaryFilter" >
+                                    <ion-item class="item-divider item-static list-details-header">{{list.name}}</ion-item>
+                                    <ion-item ng-repeat="listchild in list.children | filter:searchFilter" class="item-data-list">
+                                        <ion-checkbox ng-model="listchild.deskStatus" ng-change="setSummaryCurrentCheckBox(listchild.deskStatus,listchild.id)" >{{listchild.name}}</ion-checkbox>
+                                    </ion-item>
+                                </div>
+                            </ion-list>
+                        </ion-scroll>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{dateSummaryFilterHide}}" title="Date" icon="ion-document-text" >
+                    <ion-view class="filter-tab-view" name="test-tab">
+                        <div class="list">
+                            <label class="item item-input filter-date">
+                                <input type="text" ng-readonly="true" ng-click="showSummaryFilterDatePicker()"  ng-model="defaultSelectedFilters.dateSummaryfilter" placeholder="Date">
+                            </label>
+                        </div>
+                    </ion-view>
+                </ion-tab>
+                <!-- Pending Actionables Filters - 15 -->
+
+                <!-- Senior Manager Attestation Filters - 16 -->
+                <ion-tab hidden="{{SMAttestationRegionFilterHide}}" title="Region" icon="ion-ios-world" >
+                    <ion-view class="filter-tab-view" name="attestationdesk-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in regionSMAttesationfilters.data" class="item-data-list">
+                                <ion-radio name="SMAttestationregionfilteroptions" ng-model="regionSMAttesationfilters.selected" ng-click="triggerSMAttestationRegionFilter()" ng-value="'{{list[0]}}'" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+
+                <ion-tab hidden="{{SMProductFilterHide}}" title="Products" icon="ion-folder" >
+                    <ion-view class="filter-tab-view" name="home-tab">
+                        <ion-list class="filter-list-data">
+                            <ion-item ng-repeat="list in productSMFilter.data" class="item-data-list">
+                                <ion-radio name="productilteroptions" ng-model="productSMFilter.selected" ng-value="'{{list[0]}}'" >{{list[1]}}</ion-radio>
+                            </ion-item>
+                        </ion-list>
+                    </ion-view>
+                </ion-tab>
+                <ion-tab hidden="{{SMDateDashboardFilterHide}}" title="Date" icon="ion-document-text" >
+                    <ion-view class="filter-tab-view" name="test-tab">
+                        <div class="list">
+                            <label class="item item-input filter-date">
+                                <input type="text" ng-readonly="true" ng-click="showSMFilterDatePicker()"  ng-model="defaultSelectedFilters.dateSMAttestationfilter" placeholder="Date">
+                            </label>
+                        </div>
+                    </ion-view>
+                </ion-tab>
+                <!-- Senior Manager Attestation Filters - 18 -->
+
+            </ion-tabs>
+
+        </ion-content>
+        <div ng-show="showSignOffFilter" class="padding filter-button-option">
+            <div class="row">
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applyFilter()">
+                        Apply Filter
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applyBulkSignoff()">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div ng-show="showAttestationFilter" class="padding filter-button-option">
+            <div class="row">
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applyAttestationFilter()">
+                        Apply Filter
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="resetAttestationFilter()">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showDashboardFilter" class="padding filter-button-option">
+            <div class="row">
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applyDashboardFilter()">
+                        Apply Filter
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="resetDBFilterOptions()">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showSummaryFilter" class="padding filter-button-option">
+            <div class="row">
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applySummaryFilter()">
+                        Apply Filter
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="resetSummaryFilter()">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="showSMAttestFilter" class="padding filter-button-option">
+            <div class="row">
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="applySMAttestFilter()">
+                        Apply Filter
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="button button-block button-small button-positive" ng-click="resetSMFilterOptions()">
+                        Reset Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ion-side-menu>
+</ion-side-menus>

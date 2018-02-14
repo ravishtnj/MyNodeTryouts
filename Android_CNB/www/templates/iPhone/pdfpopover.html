@@ -1,0 +1,20 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-positive">
+		<button class="button button-icon button-clear ion-chevron-left" ng-click="getPdfPage('prev',pdfObjectData)"></button>
+		<div class="pdfPageMarker">
+			{{currPage}}/{{pdfTotalPage}}
+		</div>
+		<button class="button button-icon button-clear ion-chevron-right" ng-click="getPdfPage('next',pdfObjectData)"></button>
+
+		<button class="button button-icon button-clear ion-minus-circled" ng-click="zoomoutPDF()"></button>
+		<button class="button button-icon button-clear ion-plus-circled" ng-click="zoominPDF()"></button>
+		<button class="button button-clear button-primary" ng-click="closePDF()">Cancel</button>
+	</ion-header-bar>
+	<ion-content scroll="false">
+		<ion-scroll style="height:95%;min-height:95%;" direction="xy" scrollbar-x="true" scrollbar-y="true" >
+			<div id="parentCanvasHolder">
+				<canvas id="pdfcanvas"></canvas>
+			</div>
+		</ion-scroll>
+	</ion-content>
+</ion-modal-view>

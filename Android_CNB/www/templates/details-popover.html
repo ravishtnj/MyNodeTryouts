@@ -1,0 +1,83 @@
+<ion-view>
+    <ion-content class="details-pop" scroll="false">
+      <div class="row">
+          <div class="col col-90" align="left">
+              <div class="item item-icon-left popup-header"><i class="icon ion-information-circled"></i> {{popupDetailsData.vcrReportCat}}</div>
+          </div>
+          <div class="col col-10" align="right" ng-click="closeDetailsPopup()"><i class="icon ion-close-round popup-close-icon" ></i></div>
+      </div>
+      <ion-scroll style="height:85%;">
+      <ion-list>
+          <ion-item class="item-details-list list-details">
+              <div class="row popup-firstline">
+                  <div class="col col-40 col-border-right">Report Category</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.vcrReportCat}}</div>
+              </div>
+              <div class="row">
+                  <div class="col col-40 col-border-right">Report Name</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.vcrReportName}}</div>
+              </div>
+              <div class="row">
+                  <div class="col col-40 col-border-right">Desk</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.vcrDesc}}</div>
+              </div>
+              <div class="row">
+                  <div class="col col-40 col-border-right">Report Date</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.reportDate}}</div>
+              </div>
+              <div class="row">
+                  <div class="col col-40 col-border-right">Summary comments</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.summaryComments}}</div>
+              </div>
+          </ion-item>
+      </ion-list>
+      <ion-list>
+          <ion-item class="item-details-list list-content-head">
+              Number of Outstanding items
+          </ion-item>
+          <ion-item class="item-details-list list-content-details" >
+              <div class="row highlight">
+                  <div class="col col-40">Total</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.Total}}</div>
+              </div>
+              <div class="row highlight">
+                  <div class="col col-40">Pending</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.Pending}}</div>
+              </div>
+              <div class="row highlight hl-{{popupDetailsData.ColorBuckets[0].color}}">
+                  <div class="col col-40">T1</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[0].intBucket1}}</div>
+              </div>
+              <div class="row highlight hl-{{popupDetailsData.ColorBuckets[1].color}}">
+                  <div class="col col-40">T2</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[1].intBucket2}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[2].color}}">
+                  <div class="col col-40">T3</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[2].intBucket3}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[3].color}}">
+                  <div class="col col-40">4-7</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[3].intBucket4}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[4].color}}">
+                  <div class="col col-40">8-15</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[4].intBucket5}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[5].color}}">
+                  <div class="col col-40">16-30</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[5].intBucket6}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[6].color}}">
+                  <div class="col col-40">31-60</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[6].intBucket7}}</div>
+              </div>
+               <div class="row highlight hl-{{popupDetailsData.ColorBuckets[7].color}}">
+                  <div class="col col-40">61+</div>
+                  <div class="col col-60" align="left">{{popupDetailsData.ColorBuckets[7].intBucket8}}</div>
+              </div>
+          </ion-item>
+      </ion-list>
+      </ion-scroll>
+    </ion-content>
+</ion-view>

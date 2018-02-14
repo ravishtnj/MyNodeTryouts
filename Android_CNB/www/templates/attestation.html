@@ -1,0 +1,134 @@
+<ion-view view-title="Manager Attestation">
+	<ion-nav-buttons side="secondary">
+        <button class="signoff button button-balanced" ng-click="goToSubmitForm($event)" align="left">Sign Off</button>
+        <button class="button button-icon button-clear ion-gear-a menu-icon" style="margin: 5px 0px 0px 15px;"  menu-toggle="right"></button>
+    </ion-nav-buttons>
+	<ion-content delegate-handle="control-question"  >
+		<ion-refresher
+	    pulling-text="Pull to refresh..."
+	    on-refresh="callLocalOrService(isService,'FILTER')">
+	  </ion-refresher>
+		<ion-list  can-swipe="true"  >
+			<ion-item class="list-table-header">
+		  	 	<div class="row">
+					<div class="col col-20" align="center">Report Category</div>
+				    <div class="col col-20" align="center">Report Name</div>
+				    <div class="col col-20" align="center">Profile Exceptions</div>
+				    <div class="col col-15">Report Date</div>
+				    <div class="col col-25" align="center">Summary Comments</div>
+				</div>
+			</ion-item>
+			<div ng-repeat="item in listData" >
+		  	 	<ion-item class="item-divider item-static item  item-icon-right" ng-class="{active: isGroupShown(item)}" ng-click="toggleGroup(item)">
+		  	 		{{item.categoryName}}
+		  	 		<i class="icon " ng-class="isGroupShown(item) ? 'ion-chevron-down' : 'ion-chevron-right'" ></i>
+		  	 	</ion-item>
+		  	 	<ion-item ng-repeat="list in item.records" ng-show="isGroupShown(item)" class="item-data-list">
+		  	 		<div class="row" ng-if="list.vcrComments != 'Total'" >
+					  <div class="col col-20 categoryname">{{list.vcrReportCat}} </div>
+					  <div class="col col-20">{{list.vcrReportName}}</div>
+					  <div class="col col-20 profile-exceptions bulksignoff" align="right">
+		 					<span>{{item.greenTotal}}</span>
+		 					<span>{{item.amberTotal}}</span>
+		 					<span>{{item.redTotal}}</span>
+		 				</div>
+					  <div class="col col-15 commentary" >{{list.reportDate}}</div>
+					  <div class="col col-25 profile-exceptions bulksignoff" align="center">{{list.vcrComments}}</div>
+					</div>
+					<ion-option-button class="button-calm" ng-click="showDetailsPopup($event, list.intCatDeskId)">View Details</ion-option-button>
+				</ion-item>
+			</div>
+			<div class="list">
+			  <ion-item class="item-divider item-static item item-icon-left">
+			  	<i class="icon icon-logo ion-help-circled"></i>
+			  	Control Questions
+			  </ion-item>
+			  <label class="item item-input item-stacked-label padding-right">
+			    <span class="input-label">Are there any new business related issues?</span>
+			    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrNewBusinessRltdIssues' class="text-area-inputs"></textarea>
+			  </label>
+			  <label class="item item-input item-stacked-label padding-right">
+			    <span class="input-label">Are there any key processes supported by non mainstream applications?</span>
+			    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrKeyprocessnonMainStream' class="text-area-inputs" ></textarea>
+			  </label>
+			  <label class="item item-input item-stacked-label padding-right">
+			    <span class="input-label">Have there been any loses / incident where there is a potential exposure to firm?</span>
+			    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrPotentialExpToFirm' class="text-area-inputs" ></textarea>
+			  </label>
+			  <label class="item item-input item-stacked-label padding-right">
+			    <span class="input-label">Have there been any significant trade capture, P+L or risk issues that have not been communicated to senior management?</span>
+			    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrIssuesCommToSnr' class="text-area-inputs" ></textarea>
+			  </label>
+			  <label class="item item-input item-stacked-label padding-right">
+			    <span class="input-label">Have there been or are there any other concern and issues?</span>
+			    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrConcerns' class="text-area-inputs" ></textarea>
+			  </label>
+			</div>
+			<div class="list">
+				<div class="row">
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Audit item:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrAuditItem' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Assigned item:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrAssignedTo' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Summary:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrSummary' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="list">
+				<div class="row">
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Due Date:</span>
+						    <textarea ng-readonly="true" ng-model='attestationControlQuestions.vcrDueDate' ng-click="disableButtonSubmit || showDueDatePicker()" class="text-area-inputs"></textarea>
+						</label>
+					</div>
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Corrective Action Summary:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrCorrActionSummary' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="list">
+				<div class="row">
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Print Name:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model='attestationControlQuestions.vcrprintName' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Date:</span>
+						    <textarea ng-readonly="true" ng-click="disableButtonSubmit || showCurrDatePicker()" ng-model='attestationControlQuestions.vcrDate' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+					<div class="col">
+						<label class="item item-input item-stacked-label padding-right">
+						    <span class="input-label">Signature:</span>
+						    <textarea ng-readonly="disableButtonSubmit" ng-model ='attestationControlQuestions.vcrSignature' class="text-area-inputs"></textarea>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="padding" align="right">
+				<button class="button" ng-disabled=true ng-class="disableButtonSubmit ? 'button-disabled button-stable' : 'button-enabled button-positive'" ng-click="disableButtonSubmit || submitAttestationCtrlquestions()">
+				  Submit
+				</button>
+			</div>
+		</ion-list>
+	</ion-content>
+</ion-view>

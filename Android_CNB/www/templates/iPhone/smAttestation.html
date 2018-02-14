@@ -1,0 +1,70 @@
+<ion-view view-title="SM Attestation">
+	<ion-nav-buttons side="right">
+		<button class="button button-icon button-clear menu-icon ion-gear-a" menu-toggle="right">
+		</button>
+	</ion-nav-buttons>
+
+	<ion-content class="has-footer smAttestContent">
+		<ion-refresher pulling-text="Pull to refresh..." on-refresh="populateSenMgrData()"></ion-refresher>
+		<ion-list can-swipe="recSwipable" >
+			<div class="row" ng-show="showNotAvailable" >
+				<div class="col" align="center">No data available</div>
+			</div>
+			<ion-item ng-repeat="list in attestationData" class="item-data-list">
+				<div style="padding:0;" class="row row-phone">
+					<div style="padding:0;" class="col col-75">
+						<div style="padding:0;"  class="row secondary-label">Desk</div>
+						<div style="padding:0;font-size:14px;" class="row ">{{list['Desk Name']}}</div>
+					</div>
+					<div style="padding:0;" class="col">
+						<div style="padding:0;" class="row secondary-label">Attestaion Date</div>
+						<div style="padding:0;font-size:14px;" class="row ">{{list['AttestationDate']}}</div>
+					</div>
+				</div>
+				<div style="padding:0;" class="row row-phone">
+					<div style="padding:0;" class="col col-75">
+						<div style="padding:0;" class="row secondary-label">Manager Name</div>
+						<div style="padding:0;font-size:14px;" class="row ">{{list['ManagerID']}}</div>
+					</div>
+					<div style="padding:0;" class="col">
+						<button style="min-height: 30px;padding: 0 6px;line-height: 30px;margin-top: 8px;" class="button button-positive"  ng-click="viewPDF(list)" >View PDF</button>
+					</div>
+				</div>
+				<ion-option-button class="rejectButton button button-assertive" ng-click="reject(list)">Reject</ion-option-button>
+				<ion-option-button class="escalateButton button button-energized" ng-click="escalate(list)">Escalate</ion-option-button>
+
+			</ion-item>
+		</ion-list>
+		<ion-list can-swipe="false" >
+			<ion-item ng-repeat="item in pendingAttestationData" class="item-data-list pendingData">
+				<div style="padding:0;"  class="row row-phone">
+					<div style="padding:0;" class="col col-75">
+						<div style="padding:0;" class="row secondary-label">Desk</div>
+						<div style="padding:0;" class="row ">{{item['Desk Name']}}</div>
+					</div>
+					<div style="padding:0;" class="col secondary-label">
+						<div style="padding:0;" class="row">Attestaion Date</div>
+						<div style="padding:0;" class="row "></div>
+					</div>
+				</div>
+				<div style="padding:0;" class="row row-phone">
+					<div style="padding:0;" class="col col-75">
+						<div style="padding:0;" class="row secondary-label">Manager Name</div>
+						<div style="padding:0;" class="row ">{{item['Manager']}}</div>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+	<ion-footer-bar align-title="left" class="bar-stable">
+		<div class="row customFooter">
+			<div class="col">
+				<button class="button button-positive" ng-disabled="attestDisable" ng-click="attest()">Attest</button>
+			</div>
+			<div class="col">
+				<button class="button button-positive"  ng-disabled="viewPDFDisable" ng-click="viewPDF()">View PDF</button>
+			</div>
+		</div>
+
+	</ion-footer-bar>
+</ion-view>

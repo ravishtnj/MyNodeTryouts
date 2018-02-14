@@ -1,0 +1,53 @@
+
+    <ion-popover-view class="dashboard-popup">
+    <ion-content class="details-pop" scroll="false">
+    <div class="row header">
+    <div class="col col-90" align="left">
+    <div class="item popup-header">Details</div>
+    </div>
+    <div class="col col-10" align="right" ng-click="closeDetailsPopup()"><i class="icon ion-close-round popup-close-icon" ></i></div>
+    </div>
+    <ion-scroll style="height:90%;">
+    <ion-list>
+    <ion-item class="item-details-list list-content-details" >
+    <div class="row highlight">
+    <div class="col col-40">T1</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket1}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">T2</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket2}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">T3</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket3}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">4-7</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket4}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">8-15</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket5}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">16-30</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket6}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">31-60</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket7}}</div>
+    </div>
+    <div class="row highlight">
+    <div class="col col-40">61+</div>
+    <div class="col col-60" align="right">{{currentData.CountBucket8}}</div>
+    </div>
+    <div class="row highlight metrics-blue-bar">
+    <div class="col col-40">Total</div>
+    <div class="col col-60" align="right">{{currentData.TotExceptions}}</div>
+    </div>
+    </ion-item>
+    </ion-list>
+    </ion-scroll>
+    </ion-content>
+    </ion-popover-view>

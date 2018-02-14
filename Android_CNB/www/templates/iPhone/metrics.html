@@ -1,0 +1,64 @@
+<ion-view view-title="Dashboard summary" >
+	<ion-nav-buttons side="right">
+		<!--<button class="signoff button button-balanced" ng-click="goSignOff($event)">Sign Off</button>-->
+		<button class="button button-icon button-clear ion-gear-a menu-icon" menu-toggle="right" style="margin: 5px 0px 0px 15px;"  ></button>
+	</ion-nav-buttons>
+	<ion-content class="iphone metrics">
+		<ion-refresher
+				pulling-text="Pull to refresh..."
+				on-refresh="callLocalOrService(isService)">
+		</ion-refresher>
+		<ion-searchbar ng-model="listData"></ion-searchbar>
+		<ion-list>
+			<div class="row" ng-show="showNoDataAvail" >
+				<div class="col" align="center">No data available</div>
+			</div>
+			<div ng-repeat="item in listData">
+				<ion-item class="item-divider item-static item item-icon-right">{{item.categoryName}}</ion-item>
+				<!-- ng-click="{{list.pendingSignoff}} == 0 || navigateToDetails(item.categoryId, list.vcrReportCat)" -->
+				<div class="row" ng-show="{{item.records.length}} == 0" >
+					<div class="col" align="center">No data available</div>
+				</div>
+				<!--  -->
+				<ion-item ng-repeat="list in item.records" class="item-data-list" ng-click="navigateToDetails(item.categoryId, list.intReportCatId)" >
+					<div class="row row-phone row-metrics">
+						<div class="col col-90"><h2>{{list.ReportCategory}}</h2></div>
+						<!-- ng-show="{{list.pendingSignoff}} > 0"  -->
+						<div class="col col-10 navigator item item-icon-right" align="right"><i class="ion-chevron-right nav-icon"></i></div>
+					</div>
+					<div class="row row-phone row-metrics">
+						<div class="col col-50	secondary-label">REPORTS PENDING SIGNOFF</div>
+						<div class="col col-50	secondary-label">UNCOMMENTED RED ITEMS</div>
+					</div>
+					<div class="row row-phone row-metrics">
+						<div class="col signoff-status" align="center">
+							<nvd3 options='reportsPendingOptions' data='list.dataset'></nvd3>
+						</div>
+						<div class="col col-20	 chart-label-alignment">
+							{{list.pendingSignoff}} / {{list.count}}
+						</div>
+						<div class="col signoff-status status-commentary" style="padding-top:10px;">
+							<progress max="{{list.redTotal}}" value="{{list.redUncommentedCount}}"> </progress>
+						</div>
+						<div class="col col-20 exceptions" style="padding-top:10px;" >{{list.redUncommentedCount}} / {{list.redTotal}}</div>
+
+					</div>
+					<div class="row row-phone row-metrics">
+						<div class="col col-50 secondary-label">EXCEPTIONS PROFILE</div>
+						<div class="col col-50 secondary-label">TOTAL EXCEPTIONS</div>
+					</div>
+					<div class="row row-phone row-metrics" style="padding-bottom:10px;">
+						<div class="col col-50 profile-exceptions bulksignoff">
+							<span style="width:{{list.exceptionWidth}}px">{{list.greenTotal}}</span>
+							<span style="width:{{list.exceptionWidth}}px">{{list.amberTotal}}</span>
+							<span style="width:{{list.exceptionWidth}}px">{{list.redTotal}}</span>
+						</div>
+						<div class="col col-50 total-report-count">
+							<span style="width:{{list.totalWidth}}px">{{parseInt(list.greenTotal) + parseInt(list.amberTotal) + parseInt(list.redTotal)}}</span>
+						</div>
+					</div>
+				</ion-item>
+			</div>
+		</ion-list>
+	</ion-content>
+</ion-view>

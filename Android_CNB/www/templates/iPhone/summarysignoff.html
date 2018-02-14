@@ -1,0 +1,11 @@
+<ion-popover-view style="opacity:1" class="summary-status-popup">
+    <ion-header-bar align-title="left"> 
+        <h1 class="title">Signoff Comments</h1>
+        <div class="buttons">
+            <button class="button button-positive" ng-click="commentsDone(textcomments)">Done</button>
+        </div>
+    </ion-header-bar> 
+    <ion-content>
+        <textarea class="textAreaComments text-area-inputs" ng-model="summarypopover.textcomments" placeholder="500 chars max" ></textarea>
+    </ion-content>
+</ion-popover-view>
